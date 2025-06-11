@@ -26,3 +26,19 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+
+    conteo_max_min = {}
+    with open('files/input/data.csv', 'r') as archivo:
+        for linea in archivo:
+            partes = linea.strip().split('\t')
+            tuplas = partes[4].strip().split(',')
+            for tupla in tuplas:
+                clave, valor_str = tupla.split(':')
+                valor = int(valor_str)
+                if clave not in conteo_max_min:
+                    conteo_max_min[clave] = [valor, valor]
+                else:
+                    conteo_max_min[clave][0] = min(conteo_max_min[clave][0], valor)
+                    conteo_max_min[clave][1] = max(conteo_max_min[clave][1], valor)
+    
+    return sorted((letra, minimo, maximo) for letra, (minimo, maximo) in conteo_max_min.items())
